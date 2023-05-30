@@ -1,0 +1,68 @@
+.testimonials {
+  display: flex;
+  padding: 2rem;
+  align-items: center;
+  margin: auto;
+  justify-content: center;
+  gap: 3rem;
+  width: 80%;
+}
+
+.testi {
+  /* width: 60%; */
+  margin: auto;
+  padding: 2rem;
+  background-color: lightblue;
+}
+
+.testi .cont__rating {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 5rem;
+  align-items: center;
+}
+.cont__rating .rating .rating__btn {
+  padding: 0.2rem;
+  border: none;
+  cursor: pointer;
+  background-color: aqua;
+  border-radius: 0.5rem;
+  width: 3rem;
+  margin-top: 1rem;
+}
+
+.testi h1 {
+  text-align: center;
+  padding: 5rem 0;
+}
+
+.testimonial .rate {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.testimonial {
+  border: 1px solid #ddd;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  flex: 1;
+  position: relative;
+  background-color: #fff;
+  /* width: 20% !important; */
+}
+
+.testi .testimonials img {
+  width: 100%;
+}
+
+.testi .testimonials .quote {
+  margin: 1rem 0;
+  font-style: italic;
+}
+
+.testi .testimonials .author {
+  float: right;
+  margin: 0.5rem 0;
+}

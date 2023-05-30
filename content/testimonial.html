@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/Assets/css/style.css" />
+    <link rel="stylesheet" href="/Assets/css/testimonial.css" />
+
+    <title>Home</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header>
+      <nav>
+        <img src="/Assets/img/logo.png" alt="" />
+        <ul class="navbar__ul">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/content/projects.html">My Project</a></li>
+          <li class="testimonial-active"><a href="/content/testimonial.html">My Testimonial</a></li>
+          <li><a href="/content/contact.html" class="btnContact">Contact Me</a></li>
+        </ul>
+      </nav>
+      <a href="/content/contact.html" class="btn btn__contact">Contact Me</a>
+      <a href="#" class="navbar__menu" id="navbar__menu">
+        <i class="fa-solid fa-bars fa-2x"></i>
+      </a>
+    </header>
+    <!-- End Navbar -->
+    <div class="testi">
+      <h1>My Testimonials</h1>
+
+      <div class="cont__rating">
+        <h2>Rating by stars</h2>
+        <div class="rating">
+          <button class="rating__btn" onclick="allTestimonials()">All</button>
+          <button class="rating__btn" onclick="filterTestimonials(1)">1 <i class="fa-solid fa-star"></i></button>
+          <button class="rating__btn" onclick="filterTestimonials(2)">2 <i class="fa-solid fa-star"></i></button>
+          <button class="rating__btn" onclick="filterTestimonials(3)">3 <i class="fa-solid fa-star"></i></button>
+          <button class="rating__btn" onclick="filterTestimonials(4)">4 <i class="fa-solid fa-star"></i></button>
+          <button class="rating__btn" onclick="filterTestimonials(5)">5 <i class="fa-solid fa-star"></i></button>
+        </div>
+      </div>
+
+      <div class="testimonials" id="testimonials">
+        <div class="testimonial">
+          <img src="http://via.placeholder.com/200x200" class="profile-testimonial" />
+          <p class="quote">-Lorem ipsum dolor sit amet-</p>
+          <p class="author">-- Fernando</p>
+          <p class="rate">5<i class="fa-solid fa-star"></i></p>
+        </div>
+      </div>
+    </div>
+
+    <script src="/Assets/js/index.js"></script>
+    <script src="/Assets/js/testimonial.js"></script>
+  </body>
+</html>

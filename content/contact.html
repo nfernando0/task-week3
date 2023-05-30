@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/Assets/css/style.css" />
+    <link rel="stylesheet" href="/Assets/css/contact.css" />
+
+    <title>Contact</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header>
+      <nav>
+        <img src="/Assets/img/logo.png" alt="" />
+        <ul class="navbar__ul">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/content/projects.html">My Project</a></li>
+          <li><a href="/content/testimonial.html">My Testimonial</a></li>
+          <li class="contact-active"><a href="/content/contact.html" class="btnContact">Contact Me</a></li>
+        </ul>
+      </nav>
+      <a href="/content/contact.html" class="btn btn__contact">Contact Me</a>
+      <a href="#" class="navbar__menu" id="navbar__menu">
+        <i class="fa-solid fa-bars fa-2x"></i>
+      </a>
+    </header>
+    <!-- End Navbar -->
+
+    <!-- Contact -->
+    <div class="contact">
+      <h1>GET IN TOUCH</h1>
+
+      <form>
+        <div class="formGroup">
+          <label for="name">Name</label>
+          <input type="text" id="name" />
+        </div>
+        <div class="formGroup">
+          <label for="email">Email</label>
+          <input type="email" id="email" />
+        </div>
+        <div class="formGroup">
+          <label for="phone">Phone Number</label>
+          <input type="number" id="phone" />
+        </div>
+        <div class="formGroup">
+          <label for="subject">Subject</label>
+          <select id="subject">
+            <option value="" hidden></option>
+            <option>front end</option>
+            <option>back end</option>
+            <option>full stack</option>
+          </select>
+        </div>
+        <div class="formGroup">
+          <label for="msg">Your Message</label>
+          <textarea class="msg" id="msg"></textarea>
+        </div>
+        <button type="button" onclick="submitData()" class="btnSubmit">Submit</button>
+      </form>
+    </div>
+    <!-- End Contact -->
+
+    <script src="/Assets/js/script.js"></script>
+    <script src="/Assets/js/index.js"></script>
+  </body>
+</html>

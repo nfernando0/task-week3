@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/Assets/css/style.css" />
+    <link rel="stylesheet" href="/Assets/css/projects.css" />
+
+    <!-- Icon -->
+    <script src="https://kit.fontawesome.com/81634d0f93.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="/Assets/img/favicon.ico" type="image/x-icon">
+
+    <title>Home</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header>
+      <nav>
+        <img src="/Assets/img/logo.png" alt="" />
+        <ul class="navbar__ul">
+          <li><a href="/index.html">Home</a></li>
+          <li class="project-active"><a href="/content/projects.html"  >My Project</a></li>
+          <li><a href="/content/testimonial.html">My Testimonial</a></li>
+          <li><a href="/content/contact.html" class="btnContact">Contact Me</a></li>
+        </ul>
+      </nav>
+      <a href="/content/contact.html" class="btn btn__contact">Contact Me</a>
+      <a href="#" class="navbar__menu" id="navbar__menu">
+        <i class="fa-solid fa-bars fa-2x"></i>
+      </a>
+    </header>
+    <!-- End Navbar -->
+
+    <!-- inputProject -->
+    <section class="project">
+      <div class="container">
+        <h1>Create a Project</h1>
+
+        <form onsubmit="addBlog(event)">
+          <div class="project__group">
+            <label for="title">Project Name</label>
+            <input type="text" id="title" />
+          </div>
+          <div class="flex date">
+            <div class="project__group">
+              <label for="title">Start Date</label>
+              <input type="date" id="start" />
+            </div>
+            <div class="project__group">
+              <label for="title">End Date</label>
+              <input type="date" id="end" />
+            </div>
+          </div>
+          <div class="project__group">
+            <label for="desc">Description</label>
+            <textarea id="desc"></textarea>
+          </div>
+          <div>
+            <label class="technologies">Technologies</label>
+            <div class="flex tech">
+              <div class="left">
+                <div>
+                  <input type="checkbox" id="tech_js" value="node js" />
+                  <label for="tech_js">javascript</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="tech_react" value="node js" />
+                  <label for="tech_react">React JS</label>
+                </div>
+              </div>
+              <div class="right">
+                <div>
+                  <input type="checkbox" id="tech_php" value="node js" />
+                  <label for="tech_php">PHP</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="tech_java" value="node js" />
+                  <label for="tech_java">Java</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="uploadd">
+            <p>upload Image</p>
+            <div class="project__group position-relative bg-white border-radius">
+              <label for="upload" class="flex upload">
+                  
+                <button class="btn__choose">Choose</button>
+                <img src="/Assets/img/file.png" class="position-absolute right-0 top-0" alt="">
+                <input type="file" id="upload" class="upload" hidden/>
+              </label>
+            </div>
+          </div>
+
+          <div class="btn__submit">
+            <button class="btnSubmit" type="submit">Submit</button>
+          </div>
+        </form>
+
+      </div>
+    </section>
+
+    <!-- My Project -->
+    
+    <section class="myProjects">
+      <h1>My Project</h1>
+      
+      <div class="flex flex__card" id="content">
+        <div class="project__card">
+          <div class="project__card__img">
+            <img src="http://via.placeholder.com/50x50" alt="#" />
+          </div>
+          <div class="project__card__body">
+            <a href="/content/project.html" class="title__project"><h4>Dumbways Mobile App - 2021</h4></a>
+            <p class="durasi">durasi : 3bln</p>
+            <p class="body">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste, modi!</p>
+            <div class="flex iconTech">
+             <a href="#"><i class="fa-brands fa-square-js fa-xl fa-fw"></i></a>
+             <a href="#"><i class="fa-brands fa-react fa-xl fa-fw"></i></a>
+              </div>
+            <div class="btn__card">
+              <button class="edit">Edit</button>
+              <button class="delete">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+    
+    <script src="/Assets/js/project.js"></script>
+    <script src="/Assets/js/index.js"></script>
+
+  </body>
+</html>
