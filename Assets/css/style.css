@@ -163,8 +163,12 @@ nav ul a {
 
 /* Responsive */
 @media (max-width: 780px) {
+  .cards {
+    width: 90%;
+  }
   .cards .container {
     display: block;
+    padding: 2rem !important;
     /* width: 100%; */
   }
 
