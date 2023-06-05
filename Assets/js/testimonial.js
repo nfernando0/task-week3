@@ -97,7 +97,7 @@ const testiData = [
   },
   {
     author: "Rai Rai",
-    quote: "keren",
+    quote: "Koharu",
     image: "https://pbs.twimg.com/media/FuzxrTjagAARYJs?format=jpg&name=large",
     rating: 3,
   },
