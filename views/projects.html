@@ -66,7 +66,18 @@
             <img src="https://source.unsplash.com/500x500/?random" class="card-img-top" alt="..." />
             <div class="card-body">
               <a href="/project/{{ $index }}" class="text-black text-decoration-none"><h5 class="card-title">{{ $data.Title }}</h5></a>
-              <p class="card-text">{{ $data.Desc }}</p>
+              <p class="card-text text-truncate">{{ $data.Desc }}</p>
+              <div class="d-flex my-3 align-items-center">
+                {{ range $data.Tech}} {{ if eq . "javascript" }}
+                <i class="fa-brands fa-square-js fa-xl fa-fw"></i>
+                {{ else if eq . "react js"}}
+                <i class="fa-brands fa-react fa-xl fa-fw"></i>
+                {{ else if eq . "php"}}
+                <i class="fa-brands fa-php"></i>
+                {{ else if eq . "java"}}
+                <i class="fa-brands fa-java"></i>
+                {{ end }} {{ end }}
+              </div>
               <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
               <div class="d-flex gap-2">
                 <a href="editProject/{{ $index }}" class="btn btn-orange">Edit</a>
@@ -81,6 +92,8 @@
         {{ end }}
       </div>
     </div>
+
+    
 
     <!-- <script src="public/Assets/js/project.js"></script>
     <script src="public/Assets/js/index.js"></script> -->

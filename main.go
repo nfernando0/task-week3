@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/labstack/echo/v4"
@@ -15,31 +16,12 @@ type Project struct {
 	Id int
 	Title string
 	Desc string
-	Tech string
+	Tech []string
 	Author string
 	postDate string
 }
 
-var dataProjects = []Project {
-	{
-		Title : "Hello",
-	Desc: "Ini Content",
-	Author: "Fernando",
-	postDate: "10/10/2023",
-	},
-	{
-		Title : "Hello1",
-	Desc: "Ini Content 1",
-	Author: "Fernando",
-	postDate: "10/10/2023",
-	},
-	{
-		Title : "Hello1",
-	Desc: "Ini Content 1",
-	Author: "Fernando",
-	postDate: "10/10/2023",
-	},
-}
+var dataProjects = []Project {}
 
 func main() {
 	e := echo.New()
@@ -145,13 +127,12 @@ func addProjects(c echo.Context) error {
 func formAddProjects(c echo.Context) error {
 	title := c.FormValue("title")
 	desc := c.FormValue("desc")
-	Author := c.FormValue("author")
-	tech := c.FormValue("tech")
+	tech := c.Request().Form["technologies"]
 
-	println("title : " + title)
-	println("desc : " + desc)
-	println("author : " + Author)
-	println("Tech : " + tech)
+	// println("title : " + title)
+	// println("desc : " + desc)
+	// println("author : " + Author)
+	println("Tech : ", strings.Join(tech, ", "))
 
 	var newProject = Project {
 		Title: title,
@@ -199,6 +180,7 @@ func editProject(c echo.Context) error {
 				Id: id,
 				Title: data.Title,
 				Desc: data.Desc,
+				Tech: data.Tech,
 			}
 		}
 	}
@@ -219,10 +201,12 @@ func formEditProject(c echo.Context) error {
 
 	title := c.FormValue("title")
 	desc := c.FormValue("desc")
+	tech := c.Request().Form["technologies"]
 
 	var updateProject = Project {
 		Title: title,
 		Desc: desc,
+		Tech: tech,
 	}
 
 	dataProjects[id] = updateProject

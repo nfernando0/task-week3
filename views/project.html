@@ -64,7 +64,20 @@
           <div class="project mt-5">
             <div class="d-flex gap-2">
               <img src="https://source.unsplash.com/1000x300/?random" class="img-fluid" alt="" />
-              <h1 class="my-2">{{ .Projects.Title }}</h1>
+              <div class="d-flex flex-column">
+                <h1 class="my-2">{{ .Projects.Title }}</h1>
+                <div class="d-flex">
+                  {{ range .Projects.Tech}} {{ if eq . "javascript" }}
+                  <span><i class="fa-brands fa-square-js fa-xl fa-fw"></i> javascript</span>
+                  {{ else if eq . "react js"}}
+                  <span><i class="fa-brands fa-react fa-xl fa-fw"></i> React</span>
+                  {{ else if eq . "php"}}
+                  <span><i class="fa-brands fa-php"></i> PHP</span>
+                  {{ else if eq . "java"}}
+                  <span><i class="fa-brands fa-java"></i> Java</span>
+                  {{ end }} {{ end }}
+                </div>
+              </div>
             </div>
             <p class="my-3">{{ .Projects.Desc }}</p>
           </div>
