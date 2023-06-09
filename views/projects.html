@@ -78,7 +78,7 @@
                 <i class="fa-brands fa-java"></i>
                 {{ end }} {{ end }}
               </div>
-              <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+              <p class="card-text"><small class="text-body-secondary">Durasi {{ $data.Duration }}</small></p>
               <div class="d-flex gap-2">
                 <a href="editProject/{{ $index }}" class="btn btn-orange">Edit</a>
                 <form action="/deleteProject/{{ $index }}" method="POST">
@@ -92,8 +92,6 @@
         {{ end }}
       </div>
     </div>
-
-    
 
     <!-- <script src="public/Assets/js/project.js"></script>
     <script src="public/Assets/js/index.js"></script> -->

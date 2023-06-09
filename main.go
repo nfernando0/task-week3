@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/labstack/echo/v4"
 )
@@ -16,6 +17,9 @@ type Project struct {
 	Title string
 	Desc string
 	Tech []string
+	StartDate string
+	EndDate string
+	Duration string
 	Author string
 }
 
@@ -64,6 +68,8 @@ func projects(c echo.Context) error {
 
 	var tmpl, err = template.ParseFiles("views/projects.html")
 	
+	
+
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
@@ -92,6 +98,9 @@ func projectDetail(c echo.Context) error {
 				Title: data.Title,
 				Desc: data.Desc,
 				Tech: data.Tech,
+				StartDate: data.StartDate,
+				EndDate: data.EndDate,
+				Duration: data.Duration,
 				Author: data.Author,
 			}
 		}
@@ -124,6 +133,9 @@ func addProjects(c echo.Context) error {
 func formAddProjects(c echo.Context) error {
 	title := c.FormValue("title")
 	desc := c.FormValue("desc")
+	startDate := c.FormValue("startDate")
+	endDate := c.FormValue("endDate")
+	duration := Durasi(startDate, endDate)
 	tech := c.Request().Form["technologies"]
 
 
@@ -135,13 +147,15 @@ func formAddProjects(c echo.Context) error {
 	var newProject = Project {
 		Title: title,
 		Desc: desc,
+		Duration: duration,
 		Author: "Anonymous",
 		Tech: tech,
 	}
 
 	dataProjects = append(dataProjects, newProject)
 
-	// fmt.Println(dataProjects)
+	fmt.Println(dataProjects)
+
 
 	return c.Redirect(http.StatusMovedPermanently, "/projects")
 }
@@ -151,17 +165,6 @@ func updateProject( c echo.Context) error {
 	i, _ := strconv.Atoi(c.Param("id"))
 
 	dataProjects = append(dataProjects[:i], dataProjects[i+ 1])
-
-	return c.Redirect(http.StatusMovedPermanently, "/projects")
-}
-
-// Delete Project
-func deleteProject(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
-
-	fmt.Println("index : " , id)
-
-	dataProjects = append(dataProjects[:id], dataProjects[id+1:] ... )
 
 	return c.Redirect(http.StatusMovedPermanently, "/projects")
 }
@@ -178,6 +181,9 @@ func editProject(c echo.Context) error {
 				Title: data.Title,
 				Desc: data.Desc,
 				Tech: data.Tech,
+				StartDate: data.StartDate,
+				EndDate: data.EndDate,
+				Duration: data.Duration,
 			}
 		}
 	}
@@ -192,6 +198,19 @@ func editProject(c echo.Context) error {
 	}
 	return tmpl.Execute(c.Response(), data)
 }
+
+// Delete Project
+func deleteProject(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	fmt.Println("index : " , id)
+
+	dataProjects = append(dataProjects[:id], dataProjects[id+1:] ... )
+
+	return c.Redirect(http.StatusMovedPermanently, "/projects")
+}
+
+
 
 func formEditProject(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -228,4 +247,43 @@ func testimonial(c echo.Context) error {
 	return tmpl.Execute(c.Response(), nil)
 }
 
+// Menghitung durasi
+func Durasi(startDate, endDate string) string {
+	startdatestr, _ := time.Parse("2006-01-02", startDate)
+	enddatestr, _ := time.Parse("2006-01-02", endDate)
 
+	durasiTime := int(enddatestr.Sub(startdatestr).Hours())
+	durasiDays := durasiTime / 24
+	durasiWeeks := durasiDays / 7
+	durasiMounth := durasiWeeks / 4
+	durasiYears := durasiMounth / 12
+
+	var durasi string
+
+	if durasiYears > 1 {
+		durasi = strconv.Itoa(durasiYears) + " Tahun"
+	} else if durasiYears > 0 {
+		durasi = strconv.Itoa(durasiYears) + "Tahun"
+	} else {
+		if durasiMounth > 1 {
+			durasi = strconv.Itoa(durasiMounth) + " Bulan"
+		} else if durasiMounth > 0 {
+			durasi = strconv.Itoa(durasiMounth) + "Bulan"
+		} else {
+			if durasiWeeks > 1 {
+				durasi = strconv.Itoa(durasiWeeks) + " Minggu"
+			} else if durasiWeeks > 0{
+				durasi = strconv.Itoa(durasiWeeks) + "Minggu"
+			} else {
+				if durasiDays > 1 {
+					durasi = strconv.Itoa(durasiDays) + " Hari"
+				} else {
+					durasi = strconv.Itoa(durasiDays) + "Hari"
+				}
+			}
+		}
+	}
+
+	return durasi
+	
+}
