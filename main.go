@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/labstack/echo/v4"
 )
@@ -18,7 +17,6 @@ type Project struct {
 	Desc string
 	Tech []string
 	Author string
-	postDate string
 }
 
 var dataProjects = []Project {}
@@ -94,7 +92,6 @@ func projectDetail(c echo.Context) error {
 				Title: data.Title,
 				Desc: data.Desc,
 				Tech: data.Tech,
-				postDate: data.postDate,
 				Author: data.Author,
 			}
 		}
@@ -129,6 +126,7 @@ func formAddProjects(c echo.Context) error {
 	desc := c.FormValue("desc")
 	tech := c.Request().Form["technologies"]
 
+
 	// println("title : " + title)
 	// println("desc : " + desc)
 	// println("author : " + Author)
@@ -139,7 +137,6 @@ func formAddProjects(c echo.Context) error {
 		Desc: desc,
 		Author: "Anonymous",
 		Tech: tech,
-		postDate: time.Now().String(),
 	}
 
 	dataProjects = append(dataProjects, newProject)
