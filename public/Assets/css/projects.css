@@ -1,0 +1,180 @@
+/* .project .container { */
+/* background-color: #ffffff; */
+/* width: 50%;
+  margin: auto;
+  padding: 20px;
+}
+
+.project .container h1 {
+  text-align: center;
+}
+
+.project .project__group {
+  width: 100%;
+  margin: 9px 0;
+}
+.project .project__group textarea {
+  width: 100%;
+  resize: none;
+  height: 10rem;
+  border: none;
+  padding: 5px;
+}
+.project .project__group input {
+  width: 100%;
+  padding: 5px;
+  border: none;
+}
+.top-0 {
+  top: 15px;
+}
+.date {
+  width: 100% !important;
+}
+
+.project .project__group .upload {
+  height: 50px;
+  border-radius: 1rem;
+}
+
+.project .project__group label {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.technologies {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 20px 0;
+}
+
+.flex {
+  display: flex;
+  gap: 30px;
+}
+
+.tech {
+  width: 100%;
+}
+.uploadd p {
+  margin-top: 1rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.btn__submit {
+  display: flex;
+  justify-content: end;
+}
+
+.btn__choose {
+  border: none;
+  background-color: #ddd;
+  padding: 5px;
+  border-radius: 1rem;
+  width: 7rem;
+} */
+
+.btn__choose {
+  border: none;
+  background-color: #ddd;
+  padding: 5px;
+  border-radius: 1rem;
+  width: 7rem;
+}
+
+/* My Project */
+.myProjects {
+  background-color: #ffffff;
+  padding: 2rem 7%;
+}
+.myProjects > h1 {
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+.textArea {
+  resize: none;
+}
+
+.myProjects .project__card {
+  border: 1px solid #ddd;
+  width: 20%;
+  padding: 10px;
+  border-radius: 1rem;
+  box-shadow: 0 0 15px #d0d0d0;
+}
+.myProjects .project__card img {
+  width: 100%;
+  border-radius: 1rem;
+}
+.myProjects .project__card__body .durasi {
+  font-weight: 400;
+  margin: 0 0 10px 0;
+}
+.myProjects .project__card__body .btn__card {
+  display: flex;
+  margin-top: 20px;
+}
+.myProjects .project__card__body .btn__card button {
+  width: 100%;
+  padding: 5px;
+  margin: 5px;
+}
+.edit,
+.delete {
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  background-color: #000000;
+  color: #ffffff;
+}
+.flex__card {
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+.project__card__body .title__project {
+  color: #000000;
+}
+.myProject h4 {
+  text-align: center;
+  padding: 25px 0 10px 0;
+  font-size: 2rem;
+}
+
+.myProject .tech {
+  margin-top: 30px;
+}
+
+.myProject .container {
+  margin: auto;
+  /* background-color: #ffffff; */
+  width: 50%;
+  padding: 20px;
+}
+.myProject .body {
+  margin-top: 20px;
+}
+.myProject .body p {
+  text-align: justify;
+}
+
+.iconTech {
+  margin: 10px 0;
+  color: #000000;
+}
+
+.project__card__body .body {
+  margin: 1rem 0;
+}
+
+.btnSubmit {
+  padding: 10px 20px;
+  border: none;
+  margin: 20px;
+  background-color: rgb(42, 42, 82);
+  color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+}

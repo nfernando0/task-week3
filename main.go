@@ -1,0 +1,320 @@
+package main
+
+import (
+	// "fmt"
+	"context"
+	"fmt"
+	"html/template"
+	"net/http"
+	"strconv"
+	"time"
+
+	"github.com/labstack/echo/v4"
+	"main.go/connection"
+)
+
+type Project struct {
+	ID int
+	Title string
+	StartDate time.Time
+	EndDate time.Time
+	Duration string
+	Desc string
+	Javascript bool
+	React bool
+	PHP bool
+	Java bool
+	Image string
+	FormatDateStart string
+	FormatDateEnd string
+}
+
+// var dataProjects = []Project {
+// 	{
+// 		Title : "Hello",
+// 	Desc: "Ini Content",
+// 	// postDate: "10/10/2023",
+// 	},
+// 	{
+// 		Title : "Hello1",
+// 	Desc: "Ini Content 1",
+// 	// postDate: "10/10/2023",
+// 	},
+// }
+
+func main() {
+	connection.DatabaseConnect()
+	e := echo.New()
+
+	// e.GET("/", func(c echo.Context) error {
+	// 	return c.String(http.StatusOK, "Hello World")
+	// })
+
+	e.Static("/public", "public")
+	// Routing
+	e.GET("/", home)
+	e.GET("/contact", contact)
+	e.GET("/projects", projects) // projects
+	e.GET("/project/:id", projectDetail) // detail project
+	e.GET("/formAddProjects", formAddProjects) // tambah project
+	e.GET("/testimonial", testimonial)
+	e.GET("/editProjects/:id", editProjects)
+	
+	e.POST("/addProjects", addProjects)
+	e.POST("/editProjects/:id", editProjectsForm)
+	e.POST("/deleteProject/:id", deleteProject)
+
+	e.Logger.Fatal(e.Start("localhost:5000"))
+
+}
+
+func home(c echo.Context) error {
+	var tmpl, err = template.ParseFiles("views/index.html")
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message" : err.Error()})
+	}
+	return tmpl.Execute(c.Response(), nil)
+}
+func contact(c echo.Context) error {
+	var tmpl, err = template.ParseFiles("views/contact.html")
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message" : err.Error()})
+	}
+	return tmpl.Execute(c.Response(), nil)
+}
+func projects(c echo.Context) error {
+
+	data, _ := connection.Conn.Query(context.Background(), "SELECT id, title, start_date, end_date, duration, description, javascript, react, php, java FROM tb_projects")
+	
+	var result []Project
+	for data.Next() {
+		var each = Project{}
+
+		each.FormatDateStart = each.StartDate.Format("2 January 2006")
+		each.FormatDateEnd = each.EndDate.Format("2 January 2006")
+
+		err := data.Scan(&each.ID, &each.Title, &each.StartDate, &each.EndDate, &each.Duration, &each.Desc, &each.Javascript, &each.React, &each.PHP, &each.Java)
+		if err != nil {
+			fmt.Println(err.Error())
+			return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+		}
+
+
+		result = append(result, each)
+	}
+
+	projects := map[string]interface{} {
+		"Projects": result,
+	}
+
+	var tmpl, err = template.ParseFiles("views/projects.html")
+	
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+	}
+
+	
+
+	return tmpl.Execute(c.Response(), projects)
+}
+
+func projectDetail(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	
+	var projectDetail = Project{}
+	
+	
+	
+	 err := connection.Conn.QueryRow(context.Background(), "SELECT id, title, start_date, end_date, duration, description, javascript, react, php, java, image FROM tb_projects WHERE id=$1", id).Scan(&projectDetail.ID, &projectDetail.Title, &projectDetail.StartDate, &projectDetail.EndDate, &projectDetail.Duration, &projectDetail.Desc, &projectDetail.Javascript, &projectDetail.React, &projectDetail.PHP, &projectDetail.Java, &projectDetail.Image)
+
+	 projectDetail.FormatDateStart = projectDetail.StartDate.Format("2 January 2006")
+	projectDetail.FormatDateEnd = projectDetail.EndDate.Format("2 January 2006")
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+	}
+
+	data := map[string]interface{} {
+		"Projects" : projectDetail,
+	}
+
+	var tmpl, errTemplate = template.ParseFiles("views/project.html")
+
+	if errTemplate != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+	}
+
+	return tmpl.Execute(c.Response(), data)
+}
+
+
+func formAddProjects(c echo.Context) error {
+
+	var tmpl, err = template.ParseFiles("views/add-projects.html")
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+	}
+
+	return tmpl.Execute(c.Response(), nil)
+}
+
+// nambah project
+func addProjects(c echo.Context) error {
+	title := c.FormValue("title")
+	desc := c.FormValue("desc")
+	startDate := c.FormValue("startDate")
+	endDate := c.FormValue("endDate")
+	duration := calcDuration(startDate, endDate)
+	// Author := c.FormValue("author")
+	image := c.FormValue("image")
+
+	var javascript bool
+	if c.FormValue("javascript") == "yes" {
+		javascript = true
+	}
+	var react bool
+	if c.FormValue("react") == "yes" {
+		react = true
+	}
+	var php bool
+	if c.FormValue("php") == "yes" {
+		php = true
+	}
+	var java bool
+	if c.FormValue("java") == "yes" {
+		java = true
+	}
+
+	// println("title : " + title)
+	// println("desc : " + desc)
+	// // println("author : " + Author)
+	// println("Tech : " + tech)
+
+	_, err := connection.Conn.Exec(context.Background(), "INSERT INTO tb_projects (title, start_date, end_date, duration, description, javascript, react, php, java, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)", title, startDate,  endDate, duration , desc, javascript, react, php, java, image)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+	}
+
+	// var newProject = Project {
+	// 	Title: title,
+	// 	Desc: desc,
+	// 	Tech: tech,
+	// 	postDate: time.Now().String(),
+	// }
+
+	// dataProjects = append(dataProjects, newProject)
+
+	// fmt.Println(dataProjects)
+
+	return c.Redirect(http.StatusMovedPermanently, "/projects")
+}
+
+// Edit Project
+func editProjects(c echo.Context) error {
+
+	id,_ := strconv.Atoi(c.Param("id"))
+
+	var projectDetail = Project{}
+
+	err := connection.Conn.QueryRow(context.Background(), "SELECT id, title, start_date, end_date, duration, description, image FROM tb_projects WHERE id=$1", id).Scan(&projectDetail.ID, &projectDetail.Title, &projectDetail.StartDate, &projectDetail.EndDate, &projectDetail.Duration, &projectDetail.Desc, &projectDetail.Image)
+
+	data := map[string]interface{}{
+		"Projects": projectDetail,
+	}
+	
+	var tmpl, errTemplate = template.ParseFiles("views/edit-projects.html")
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": errTemplate.Error()})
+	}
+
+	return tmpl.Execute(c.Response(), data)
+
+}
+
+func editProjectsForm(c echo.Context) error {
+	id,_ := strconv.Atoi(c.Param("id"))
+
+	title := c.FormValue("title")
+	desc := c.FormValue("desc")
+	StartDate := c.FormValue("startDate")
+	EndDate := c.FormValue("endDate")
+	duration := calcDuration(StartDate, EndDate)
+	tech := c.FormValue("tech")
+	image := c.FormValue("image")
+
+	_, err := connection.Conn.Exec(context.Background(), "UPDATE tb_projects SET title=$1, start_date=$2, end_date=$3, duration=$4, description=$5, technologies=$6, image=$7 WHERE id=$8", title, StartDate, EndDate, duration, desc, tech, image, id)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+	}
+
+	return c.Redirect(http.StatusMovedPermanently, "/projects")
+}
+
+// Menghitung durasi
+func calcDuration(startDate string, endDate string) string {
+	StartDate,_ := time.Parse("2006-01-02", startDate)
+	EndDate,_ := time.Parse("2006-01-02", endDate)
+
+	durationTime := int(EndDate.Sub(StartDate).Hours())
+	durationDays := durationTime / 24
+	durationWeeks := durationDays / 7
+	durationMonth := durationWeeks / 4
+	durationYears := durationMonth / 12
+
+	var duration string
+
+	if durationYears > 1 {
+		duration = strconv.Itoa(durationYears) + " Years"
+	} else if durationYears > 0 {
+		duration = strconv.Itoa(durationYears) + "Years"
+	} else {
+		if durationMonth > 1 {
+			duration = strconv.Itoa(durationMonth) + " Month"
+		} else if durationMonth > 0 {
+			duration = strconv.Itoa(durationMonth) + "Month"
+		} else {
+			if durationWeeks > 1 {
+				duration = strconv.Itoa(durationWeeks) + " Weeks"
+			} else if durationWeeks > 0 {
+				duration = strconv.Itoa(durationWeeks) + " Weeks"
+			} else {
+				if durationDays > 1 {
+					duration = strconv.Itoa(durationDays) + " Days"
+				} else {
+					duration = strconv.Itoa(durationDays) + " Days"
+				}
+			}
+		}
+	}
+	return duration
+}
+
+// Delete Project
+func deleteProject(c echo.Context) error {
+
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	fmt.Println("index : " , id)
+
+	_, err := connection.Conn.Exec(context.Background(), "DELETE FROM tb_projects WHERE id=$1", id)
+
+	if err != nil {
+		return c.JSON(http.StatusMovedPermanently, map[string]string{"message": err.Error()})
+	}
+	// dataProjects = append(dataProjects[:id], dataProjects[id+1:] ... )
+
+	return c.Redirect(http.StatusMovedPermanently, "/projects")
+}
+
+func testimonial(c echo.Context) error {
+	var tmpl, err = template.ParseFiles("views/testimonial.html")
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message" : err.Error()})
+	}
+	return tmpl.Execute(c.Response(), nil)
+}
+
+
