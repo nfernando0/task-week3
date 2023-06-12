@@ -218,7 +218,7 @@ func editProjects(c echo.Context) error {
 
 	var projectDetail = Project{}
 
-	err := connection.Conn.QueryRow(context.Background(), "SELECT id, title, start_date, end_date, duration, description, image FROM tb_projects WHERE id=$1", id).Scan(&projectDetail.ID, &projectDetail.Title, &projectDetail.StartDate, &projectDetail.EndDate, &projectDetail.Duration, &projectDetail.Desc, &projectDetail.Image)
+	err := connection.Conn.QueryRow(context.Background(), "SELECT id, title, start_date, end_date, duration, description, javascript, react, php, java, image FROM tb_projects WHERE id=$1", id).Scan(&projectDetail.ID, &projectDetail.Title, &projectDetail.StartDate, &projectDetail.EndDate, &projectDetail.Duration, &projectDetail.Desc,&projectDetail.Javascript, &projectDetail.React, &projectDetail.PHP, &projectDetail.Java, &projectDetail.Image)
 
 	data := map[string]interface{}{
 		"Projects": projectDetail,
@@ -241,10 +241,13 @@ func editProjectsForm(c echo.Context) error {
 	StartDate := c.FormValue("startDate")
 	EndDate := c.FormValue("endDate")
 	duration := calcDuration(StartDate, EndDate)
-	tech := c.FormValue("tech")
+	javascript := c.FormValue("javascript")
+	react := c.FormValue("react")
+	php := c.FormValue("php")
+	java := c.FormValue("java")
 	image := c.FormValue("image")
 
-	_, err := connection.Conn.Exec(context.Background(), "UPDATE tb_projects SET title=$1, start_date=$2, end_date=$3, duration=$4, description=$5, technologies=$6, image=$7 WHERE id=$8", title, StartDate, EndDate, duration, desc, tech, image, id)
+	_, err := connection.Conn.Exec(context.Background(), "UPDATE tb_projects SET title=$1, start_date=$2, end_date=$3, duration=$4, description=$5, javascript=$6, react=$7, php=$8, java=$9, image=$10 WHERE id=$11", title, StartDate, EndDate, duration, desc, javascript != "", react != "", php != "", java != "", image, id)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
