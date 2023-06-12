@@ -217,12 +217,16 @@ func formEditProject(c echo.Context) error {
 
 	title := c.FormValue("title")
 	desc := c.FormValue("desc")
+	startDate := c.FormValue("startDate")
+	endDate := c.FormValue("endDate")
+	duration := Durasi(startDate, endDate)
 	tech := c.Request().Form["technologies"]
 
 	var updateProject = Project {
 		Title: title,
 		Desc: desc,
 		Tech: tech,
+		Duration: duration,
 	}
 
 	dataProjects[id] = updateProject
