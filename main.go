@@ -1,7 +1,6 @@
 package main
 
 import (
-	// "fmt"
 	"context"
 	"fmt"
 	"html/template"
@@ -51,7 +50,7 @@ func main() {
 	// })
 
 	e.Static("/public", "public")
-	// Routing
+	// Routing method GET
 	e.GET("/", home)
 	e.GET("/contact", contact)
 	e.GET("/projects", projects) // projects
@@ -60,6 +59,7 @@ func main() {
 	e.GET("/testimonial", testimonial)
 	e.GET("/editProjects/:id", editProjects)
 	
+	// Routing Method POST
 	e.POST("/addProjects", addProjects)
 	e.POST("/editProjects/:id", editProjectsForm)
 	e.POST("/deleteProject/:id", deleteProject)
@@ -70,11 +70,14 @@ func main() {
 
 func home(c echo.Context) error {
 	var tmpl, err = template.ParseFiles("views/index.html")
+	
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message" : err.Error()})
 	}
 	return tmpl.Execute(c.Response(), nil)
 }
+
+// Contact
 func contact(c echo.Context) error {
 	var tmpl, err = template.ParseFiles("views/contact.html")
 	if err != nil {
@@ -82,6 +85,8 @@ func contact(c echo.Context) error {
 	}
 	return tmpl.Execute(c.Response(), nil)
 }
+
+// Detail Project
 func projects(c echo.Context) error {
 
 	data, _ := connection.Conn.Query(context.Background(), "SELECT id, title, start_date, end_date, duration, description, javascript, react, php, java FROM tb_projects")
@@ -90,15 +95,15 @@ func projects(c echo.Context) error {
 	for data.Next() {
 		var each = Project{}
 
-		each.FormatDateStart = each.StartDate.Format("2 January 2006")
-		each.FormatDateEnd = each.EndDate.Format("2 January 2006")
-
+		
 		err := data.Scan(&each.ID, &each.Title, &each.StartDate, &each.EndDate, &each.Duration, &each.Desc, &each.Javascript, &each.React, &each.PHP, &each.Java)
 		if err != nil {
 			fmt.Println(err.Error())
 			return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 		}
-
+		
+		each.FormatDateStart = each.StartDate.Format("2 January 2006")
+		each.FormatDateEnd = each.EndDate.Format("2 January 2006")
 
 		result = append(result, each)
 	}
@@ -124,8 +129,6 @@ func projectDetail(c echo.Context) error {
 	
 	var projectDetail = Project{}
 	
-	
-	
 	 err := connection.Conn.QueryRow(context.Background(), "SELECT id, title, start_date, end_date, duration, description, javascript, react, php, java, image FROM tb_projects WHERE id=$1", id).Scan(&projectDetail.ID, &projectDetail.Title, &projectDetail.StartDate, &projectDetail.EndDate, &projectDetail.Duration, &projectDetail.Desc, &projectDetail.Javascript, &projectDetail.React, &projectDetail.PHP, &projectDetail.Java, &projectDetail.Image)
 
 	 projectDetail.FormatDateStart = projectDetail.StartDate.Format("2 January 2006")
@@ -148,18 +151,17 @@ func projectDetail(c echo.Context) error {
 	return tmpl.Execute(c.Response(), data)
 }
 
-
+// nambah project
 func formAddProjects(c echo.Context) error {
 
 	var tmpl, err = template.ParseFiles("views/add-projects.html")
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
-
+	
 	return tmpl.Execute(c.Response(), nil)
 }
 
-// nambah project
 func addProjects(c echo.Context) error {
 	title := c.FormValue("title")
 	desc := c.FormValue("desc")
@@ -186,28 +188,11 @@ func addProjects(c echo.Context) error {
 		java = true
 	}
 
-	// println("title : " + title)
-	// println("desc : " + desc)
-	// // println("author : " + Author)
-	// println("Tech : " + tech)
-
 	_, err := connection.Conn.Exec(context.Background(), "INSERT INTO tb_projects (title, start_date, end_date, duration, description, javascript, react, php, java, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)", title, startDate,  endDate, duration , desc, javascript, react, php, java, image)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
-
-	// var newProject = Project {
-	// 	Title: title,
-	// 	Desc: desc,
-	// 	Tech: tech,
-	// 	postDate: time.Now().String(),
-	// }
-
-	// dataProjects = append(dataProjects, newProject)
-
-	// fmt.Println(dataProjects)
-
 	return c.Redirect(http.StatusMovedPermanently, "/projects")
 }
 
@@ -312,6 +297,7 @@ func deleteProject(c echo.Context) error {
 	return c.Redirect(http.StatusMovedPermanently, "/projects")
 }
 
+// Testimonial
 func testimonial(c echo.Context) error {
 	var tmpl, err = template.ParseFiles("views/testimonial.html")
 	if err != nil {
