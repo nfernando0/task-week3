@@ -28,28 +28,12 @@ type Project struct {
 	FormatDateEnd string
 }
 
-// var dataProjects = []Project {
-// 	{
-// 		Title : "Hello",
-// 	Desc: "Ini Content",
-// 	// postDate: "10/10/2023",
-// 	},
-// 	{
-// 		Title : "Hello1",
-// 	Desc: "Ini Content 1",
-// 	// postDate: "10/10/2023",
-// 	},
-// }
-
 func main() {
 	connection.DatabaseConnect()
 	e := echo.New()
 
-	// e.GET("/", func(c echo.Context) error {
-	// 	return c.String(http.StatusOK, "Hello World")
-	// })
-
 	e.Static("/public", "public")
+
 	// Routing method GET
 	e.GET("/", home)
 	e.GET("/contact", contact)
@@ -123,6 +107,7 @@ func projects(c echo.Context) error {
 	return tmpl.Execute(c.Response(), projects)
 }
 
+// Projects
 func projectDetail(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
