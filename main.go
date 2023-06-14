@@ -79,10 +79,24 @@ func main() {
 }
 
 func home(c echo.Context) error {
-	var tmpl, err = template.ParseFiles("views/index.html")
+
+	data, _ := connection.Conn.Query(context.Background(), "SELECT id, title, start_date, end_date, duration, description, javascript, react, php, java FROM tb_projects ORDER BY id DESC")
 	
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]string{"message" : err.Error()})
+	var result []Project
+	for data.Next() {
+		var each = Project{}
+
+		
+		err := data.Scan(&each.ID, &each.Title, &each.StartDate, &each.EndDate, &each.Duration, &each.Desc, &each.Javascript, &each.React, &each.PHP, &each.Java)
+		if err != nil {
+			fmt.Println(err.Error())
+			return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+		}
+		
+		each.FormatDateStart = each.StartDate.Format("2 January 2006")
+		each.FormatDateEnd = each.EndDate.Format("2 January 2006")
+
+		result = append(result, each)
 	}
 
 	sess, _ := session.Get("session", c)
@@ -93,16 +107,23 @@ func home(c echo.Context) error {
 		userData.IsLogin = sess.Values["isLogin"].(bool)
 		userData.Name = sess.Values["name"].(string)
 	}
-
+	
+	delete(sess.Values, "message")
+	delete(sess.Values, "status")
+	sess.Save(c.Request(), c.Response())
+	
 	datas := map[string]interface{} {
+		"Projects": result,
 		"FlashStatus": sess.Values["status"],
 		"FlashMessage": sess.Values["message"],
 		"DataSession": userData,
 	}
-
-	delete(sess.Values, "message")
-	delete(sess.Values, "status")
-
+	
+	var tmpl, err = template.ParseFiles("views/index.html")
+	
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message" : err.Error()})
+	}
 	
 	return tmpl.Execute(c.Response(), datas)
 }
@@ -253,7 +274,7 @@ func addProjects(c echo.Context) error {
 	}
 
 
-	return c.Redirect(http.StatusMovedPermanently, "/projects")
+	return c.Redirect(http.StatusMovedPermanently, "/")
 }
 
 // Edit Project
@@ -306,7 +327,7 @@ func editProjectsForm(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
 
-	return c.Redirect(http.StatusMovedPermanently, "/projects")
+	return c.Redirect(http.StatusMovedPermanently, "/")
 }
 
 // Menghitung durasi
