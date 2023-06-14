@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="public/Assets/css/style.css" />
+    <link rel="stylesheet" href="public/Assets/css/projects.css" />
+
+    <!-- Bootstrasp -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+
+    <!-- Icon -->
+    <script src="https://kit.fontawesome.com/81634d0f93.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="public/Assets/img/favicon.ico" type="image/x-icon" />
+
+    <title>Halaman Projects</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <img src="public/Assets/img/logo.png" alt="" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-orange" href="projects">Add Project</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="testimonial">My Testimonial</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            {{ if .DataSession.IsLogin }}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Welcome Back, {{ .DataSession.Name }} </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <form action="/logout" method="POST">
+                    <button class="dropdown-item">Log out</button>
+                  </form>
+                </li>
+              </ul>
+            </li>
+            {{ else }}
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            {{ end }}
+            <li class="nav-item">
+              <a href="contact" class="btn btn-orange mt-2 mt-md-0">Contact Me</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <div class="container mt-5">
+      {{ if .DataSession.IsLogin }}
+      <a class="btn btn-orange" href="formAddProjects">Add Projects</a>
+      {{ end }}
+      <div class="row justify-content-center mt-5">
+        <h1 class="text-center my-2">My Projects</h1>
+        {{ range $index, $data := .Projects }}
+        <div class="col-lg-4">
+          <div class="card mb-3">
+            <img src="https://source.unsplash.com/500x500/?random" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <a href="/project/{{ $data.ID }}" class="text-decoration-none"><h5 class="card-title text-black">{{ $data.Title }}</h5></a>
+              <p class="card-text text-truncate">{{ $data.Desc }}</p>
+              <p class="fs-1 line-spacing text-start">
+                {{if $data.Javascript}}
+                <i class="fa-brands fa-square-js"></i>
+                {{end}} {{if $data.React}}
+                <i class="fa-brands fa-react"></i>
+                {{end}} {{if $data.PHP}}
+                <i class="fa-brands fa-php"></i>
+                {{end}} {{if $data.Java}}
+                <i class="fa-brands fa-java"></i>
+                {{end}}
+              </p>
+              <div class="d-flex justify-content-between">
+                <p class="card-text"><small class="text-body-secondary">{{ $data.FormatDateStart }} - {{ $data.FormatDateEnd }}</small></p>
+                <p class="card-text"><small class="text-body-secondary">Durasi : {{ $data.Duration }}</small></p>
+              </div>
+              <div class="d-flex gap-2">
+                <a href="/editProjects/{{ $data.ID }}" class="btn btn-orange">Edit</a>
+                <form action="/deleteProject/{{ $data.ID }}" method="POST">
+                  <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure delete {{ $data.Title }}')">Delete</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+
+    <!-- <script src="public/Assets/js/project.js"></script>
+    <script src="public/Assets/js/index.js"></script> -->
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>
