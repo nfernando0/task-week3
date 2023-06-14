@@ -48,7 +48,7 @@ func main() {
 	e.POST("/editProjects/:id", editProjectsForm)
 	e.POST("/deleteProject/:id", deleteProject)
 
-	e.Logger.Fatal(e.Start("localhost:5000"))
+	e.Logger.Fatal(e.Start(":5000"))
 
 }
 
@@ -186,13 +186,17 @@ func editProjects(c echo.Context) error {
 
 	id,_ := strconv.Atoi(c.Param("id"))
 
+
 	var projectDetail = Project{}
 
 	err := connection.Conn.QueryRow(context.Background(), "SELECT id, title, start_date, end_date, duration, description, javascript, react, php, java, image FROM tb_projects WHERE id=$1", id).Scan(&projectDetail.ID, &projectDetail.Title, &projectDetail.StartDate, &projectDetail.EndDate, &projectDetail.Duration, &projectDetail.Desc,&projectDetail.Javascript, &projectDetail.React, &projectDetail.PHP, &projectDetail.Java, &projectDetail.Image)
 
 	data := map[string]interface{}{
 		"Projects": projectDetail,
+		"StartDate": projectDetail.StartDate.Format("2006-01-02"),
+		"EndDate":   projectDetail.EndDate.Format("2006-01-02"),
 	}
+
 	
 	var tmpl, errTemplate = template.ParseFiles("views/edit-projects.html")
 	if err != nil {
