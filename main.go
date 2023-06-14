@@ -266,6 +266,10 @@ func editProjects(c echo.Context) error {
 
 	err := connection.Conn.QueryRow(context.Background(), "SELECT id, title, start_date, end_date, duration, description, javascript, react, php, java, image FROM tb_projects WHERE id=$1", id).Scan(&projectDetail.ID, &projectDetail.Title, &projectDetail.StartDate, &projectDetail.EndDate, &projectDetail.Duration, &projectDetail.Desc,&projectDetail.Javascript, &projectDetail.React, &projectDetail.PHP, &projectDetail.Java, &projectDetail.Image)
 
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
+	}
+
 	data := map[string]interface{}{
 		"Projects": projectDetail,
 		"StartDate": projectDetail.StartDate.Format("2006-01-02"),
@@ -274,7 +278,7 @@ func editProjects(c echo.Context) error {
 
 	
 	var tmpl, errTemplate = template.ParseFiles("views/edit-projects.html")
-	if err != nil {
+	if errTemplate != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": errTemplate.Error()})
 	}
 
