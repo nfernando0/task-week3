@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="public/Assets/css/style.css" />
+    <link rel="stylesheet" href="public/Assets/css/projects.css" />
+
+    <!-- Bootstrasp -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+
+    <!-- Icon -->
+    <script src="https://kit.fontawesome.com/81634d0f93.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="public/Assets/img/favicon.ico" type="image/x-icon" />
+
+    <title>Home</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <img src="public/Assets/img/logo.png" alt="" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-orange" href="projects">Add Project</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="testimonial">My Testimonial</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a href="contact" class="btn btn-orange">Contact Me</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <!-- My Project -->
+
+    <!-- inputProject -->
+
+    <div class="project">
+      <h1 class="text-center my-5">Create a Project</h1>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5">
+            <form action="/addProjects" method="POST">
+              <div class="mb-3">
+                <label for="title" class="form-label">Project Name</label>
+                <input type="text" class="form-control" id="title" name="title" required />
+              </div>
+              <div class="mb-3 flex test">
+                <div>
+                  <label for="start" class="form-label">Start Date</label>
+                  <input type="date" class="form-control" name="startDate" id="start" required />
+                </div>
+                <div>
+                  <label for="end" class="form-label">End Date</label>
+                  <input type="date" class="form-control" name="endDate" id="end" required />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="desc" class="form-label">Description</label>
+                <textarea class="form-control textArea" id="desc" name="desc" required></textarea>
+              </div>
+              <div>
+                <label for="tech" class="form-label">Technologies</label>
+                <div class="d-flex w-100">
+                  <div>
+                    <div class="form-check mx-3">
+                      <input class="form-check-input" type="checkbox" name="javascript" value="yes" id="tech_js" />
+                      <label class="form-check-label" for="tech_js"> Javascript </label>
+                    </div>
+                    <div class="form-check mx-3">
+                      <input class="form-check-input" type="checkbox" name="react" value="yes" id="tech_react" />
+                      <label class="form-check-label" for="tech_react"> React Js </label>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="php" value="yes" id="tech_php" />
+                      <label class="form-check-label" for="tech_php"> PHP </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="java" value="yes" id="tech_java" />
+                      <label class="form-check-label" for="tech_java"> Java </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="my-3">
+                <label for="upload" class="form-label">Upload Image</label>
+                <div>
+                  <label class="d-flex upload w-100 shadow-lg justify-content-between px-2">
+                    <button class="btn__choose">Choose</button>
+                    <img src="public/Assets/img/file.png" alt="" />
+                    <input type="file" id="upload" name="image" hidden />
+                  </label>
+                </div>
+              </div>
+              <button class="btn btn-orange" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- My Project -->
+
+    <!-- <script src="public/Assets/js/project.js"></script>
+    <script src="public/Assets/js/index.js"></script> -->
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>
