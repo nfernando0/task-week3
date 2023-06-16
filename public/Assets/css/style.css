@@ -1,0 +1,221 @@
+* {
+  text-decoration: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.w-100 {
+  width: 100%;
+}
+.right-0 {
+  right: 0;
+}
+.right {
+  float: right;
+}
+.btn-orange {
+  background-color: orangered !important;
+  color: #fff !important;
+}
+.text-orange {
+  color: orangered !important;
+}
+.position-absolute {
+  position: absolute;
+}
+.position-relative {
+  position: relative;
+}
+.bg-white {
+  background-color: #ffffff;
+}
+.border-radius {
+  border-radius: 1rem;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #d0d0d0d0 !important;
+}
+
+header {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  right: 0;
+  top: 0;
+  left: 0;
+  background-color: #eeecec;
+  padding: 10px 7%;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav ul {
+  display: flex;
+  margin: 0;
+}
+nav ul a {
+  /* margin: 0 15px; */
+  color: #000000;
+}
+
+.btn {
+  padding: 5px 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #000000;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.icon a {
+  font-size: 1.5rem;
+}
+
+/* Nav Responsive */
+.navbar__menu {
+  display: none;
+}
+
+.project-active a,
+.home-active a,
+.testimonial-active a {
+  color: red;
+}
+
+.btn__contact {
+  display: block;
+}
+.btnContact {
+  display: none;
+}
+
+/* Contact */
+
+/* Card */
+
+.cards {
+  background-color: #fff;
+  width: 60%;
+  align-items: center;
+  margin: 10rem auto;
+  display: flex;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* .cards {
+  margin: auto;
+}
+.cards .container {
+  background-color: #ffffff;
+  box-sizing: 0 0 15px #d0d0d0;
+  display: flex;
+  padding: 2rem;
+  margin: 100px auto; */
+/* margin: 100px 50px; */
+/* width: 80%;
+}
+
+.container .left {
+  flex: 50%;
+}
+.container .left p {
+  text-align: justify;
+  margin-right: 40px;
+}
+.container .left h2 {
+  margin: 20px 0;
+}
+
+.container .right {
+  flex: 50%;
+}
+
+.cards .card img {
+  width: 100%;
+}
+
+.container .btnContact {
+  margin: 20px 0;
+}
+.container a { */
+/* color: #000000;
+  margin-left: 10px;
+}
+
+.container .card {
+  border: 1px solid #000000;
+  text-align: center;
+  width: 50%;
+  box-shadow: 0 0 15px #d0d0d0;
+  margin: auto;
+}
+
+.icon i {
+  margin: 30px 10px;
+  font-size: 30px;
+} */
+
+/* Responsive */
+@media (max-width: 780px) {
+  .cards {
+    width: 90%;
+  }
+  .cards .container {
+    display: block;
+    padding: 2rem !important;
+    /* width: 100%; */
+  }
+
+  header .navbar__menu {
+    display: block;
+  }
+  header nav ul {
+    position: absolute;
+    top: -1000%;
+    display: block;
+    /* width: 85%; */
+    text-align: center;
+    background-color: lightblue;
+    border: 1px solid #ffffff;
+  }
+  header nav ul.active {
+    top: 100%;
+  }
+  header nav ul li.active,
+  header nav ul li.project-active,
+  header nav ul li.contact-active,
+  header nav ul li.testimonial-active {
+    width: 100%;
+    background-color: red;
+  }
+
+  header nav ul li {
+    border: 1px solid #ffffff;
+  }
+  header nav ul a {
+    margin: 1rem;
+    width: 100%;
+    color: #000000 !important;
+  }
+
+  .btn__contact {
+    display: none;
+  }
+  .btnContact {
+    display: block;
+    margin: 0;
+  }
+
+  /* .contact {
+    margin: 2rem;
+  }
+  .contact form {
+    width: 100%;
+  } */
+}

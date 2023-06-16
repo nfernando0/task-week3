@@ -1,0 +1,35 @@
+.testimonials {
+  display: flex;
+  align-items: center;
+  margin: auto;
+  justify-content: center;
+  gap: 3rem;
+  width: 100%;
+}
+
+.testi h1 {
+    text-align: center;
+    padding: 5rem 0;
+}
+
+.testimonial {
+  border: 1px solid #ddd;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  background-color: #fff;
+  width: 15%;
+}
+
+.testi .testimonials img {
+  width: 100%;
+}
+
+.testi .testimonials .quote {
+    margin: 1rem 0;
+    font-style: italic;
+}
+
+.testi .testimonials .author {
+  float: right;
+  margin: 0.5rem 0;
+}
